@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
 import Shelf from '../components/shelf';
 import Action_button from '../components/action_button';
+import {getAll} from '../BooksAPI'
 export default class Home extends React.Component{
+    constructor(props){
+        super(props);
+            this.state={
+                books:[]
+            }
+    }
+    componentDidMount(){
+        getAll()
+        .then(rec=>{
+            console.log(rec)
+            this.setState({books:rec});
+        })
+    }
     render(){
         return(
             <div className="list-books">
                <div className="list-books-title">
                    <h1>MyReads</h1>
                </div>
-               //Render Shelf
+               {/*Render Shelves*/}
                <div className="list-books-content">
-                   <Shelf />
-                   <Shelf />
-                   <Shelf />
-                   //FAB
+                   <Shelf title="Books I am reading" books={this.state.books.filter(x=>x.shelf=== "currentlyReading")}/>
+                   <Shelf title="Books I want to read" books={this.state.books.filter(x=>x.shelf=== "wantToRead")}/>
+                   <Shelf title="Books I have read"
+                       books={this.state.books.filter(x=>x.shelf=== "read")}/>
+                   {/*FAB*/}
                </div>
                <Action_button />
             </div>

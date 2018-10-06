@@ -3,13 +3,11 @@ import Home from './pages/home'
 import Search from './pages/search'
 import {Switch,Route} from 'react-router-dom'
 
+
 // import * as BooksAPI from './BooksAPI'
 import './App.css'
 
 class BooksApp extends React.Component {
-    state = {
-        showSearchPage: false
-    }
 
     render() {
         return (<div className="app">
