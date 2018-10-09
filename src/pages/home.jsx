@@ -19,16 +19,19 @@ export default class Home extends React.Component{
             console.log(rec)
             this.setState({books:rec});
         })
-    }
+}
     update=(book,shelf)=>{
         bookAPI.update(book,shelf)
         .then(rec=>{
             book.shelf=shelf
             this.setState(state=>{
-                books:state.books.filter(x=>x.id!==book.id).concat({book})
-            });
-        });
+            books:state.books.filter(x=>x.id!==book.id).concat({book})
+            console.log("trying to set state")
+            return state;
+            })
+        })
     }
+
 
     render(){
 
