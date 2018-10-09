@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Book from './books'
 export default class Shelf extends React.Component{
+
     componentDidMount(){
-        console.log(this);
+
     }
 
 render() {
@@ -11,7 +12,7 @@ render() {
           <h2 className="bookshelf-title">{this.props.title}</h2>
           <div className="bookshelf-books">
             <ol className="books-grid">
-                {this.props.books && this.props.books.map(book => <Book key={book.id} {...book}
+                {this.props.books.map(book => <Book update={this.props.update} key={book.id} book={book}
                 />)}
             </ol>
           </div>

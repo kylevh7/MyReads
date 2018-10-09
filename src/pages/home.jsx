@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import Shelf from '../components/shelf';
 import Book from '../components/books';
 import Action_button from '../components/action_button';
-import {getAll} from '../BooksAPI'
+import * as bookAPI from '../BooksAPI';
+import {getAll} from '../BooksAPI';
+
+
 export default class Home extends React.Component{
     constructor(props){
         super(props);
@@ -17,8 +20,18 @@ export default class Home extends React.Component{
             this.setState({books:rec});
         })
     }
+    update=(book,shelf)=>{
+        bookAPI.update(book,shelf)
+        .then(rec=>{
+            book.shelf=shelf
+            this.setState(state=>{
+                books:state.books.filter(x=>x.id!==book.id).concat({book})
+            });
+        });
+    }
 
     render(){
+
         return(
             <div className="list-books">
                <div className="list-books-title">
@@ -26,9 +39,9 @@ export default class Home extends React.Component{
                </div>
                {/*Render Shelves*/}
                <div className="list-books-content">
-                   <Shelf title="Books I am reading" books={this.state.books.filter(x=>x.shelf=== "currentlyReading")}/>
-                   <Shelf title="Books I want to read" books={this.state.books.filter(x=>x.shelf=== "wantToRead")}/>
-                   <Shelf title="Books I have read"
+                   <Shelf update={this.update} title="Books I am reading" books={this.state.books.filter(x=>x.shelf=== "currentlyReading")}/>
+                   <Shelf update={this.update} title="Books I want to read" books={this.state.books.filter(x=>x.shelf=== "wantToRead")}/>
+                   <Shelf update={this.update} title="Books I have read"
                        books={this.state.books.filter(x=>x.shelf=== "read")}/>
 
                    {/*FAB*/}
