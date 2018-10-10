@@ -26,7 +26,6 @@ export default class Home extends React.Component{
             book.shelf=shelf
             this.setState(state=>{
             books:state.books.filter(x=>x.id!==book.id).concat({book})
-            console.log("trying to set state")
             return state;
             })
         })
