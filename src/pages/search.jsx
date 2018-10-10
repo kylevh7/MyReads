@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import * as bookAPI from '../BooksAPI';
 import {getAll} from '../BooksAPI';
 import Book from '../components/books'
+import * as bookAPI from '../BooksAPI';
+import update from '../BooksAPI';
+
 
 export default class Search extends React.Component {
     constructor(props) {
@@ -15,10 +17,16 @@ export default class Search extends React.Component {
     }
 
     componentDidMount() {
-        bookAPI.getAll()
-        .then(rec => {
-            this.setState({books: rec})
-            console.log(rec)
+
+    }
+    update=(book,shelf)=>{
+        bookAPI.update(book,shelf)
+        .then(rec=>{
+            book.shelf=shelf
+            this.setState(state=>{
+            books:state.books.filter(x=>x.id!==book.id).concat({book})
+            return state;
+            })
         })
     }
 
@@ -55,7 +63,7 @@ export default class Search extends React.Component {
             <div className="search-books-results">
                 <ol className="books-grid">
                     {
-                        this.state.results.map(book => <Book  key={book.id} book={book} />)
+                        this.state.results.map(book => <Book update={this.update} book={book} />)
                         }
 
 
