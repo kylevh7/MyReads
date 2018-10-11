@@ -17,8 +17,12 @@ export default class Search extends React.Component {
     }
 
     componentDidMount() {
-
+        getAll()
+        .then(rec=>{
+            this.setState({books:rec});
+        })
     }
+
     update=(book,shelf)=>{
         bookAPI.update(book,shelf)
         .then(rec=>{
@@ -45,7 +49,16 @@ export default class Search extends React.Component {
             if (rec.error) {
                 return this.setState({results: []})
             } else {
-                return this.setState({results: rec})
+                this.setState({results:rec})
+                    rec.forEach((x)=>{
+                        let found=this.state.books.filter(y=>y.id===x.id)
+                        if(found[0]){
+                            x.shelf=found[0].shelf
+                            console.log(x.shelf)
+                        }
+                    })
+                    return this.setState({results:rec});
+
             }
         })
     }
@@ -63,7 +76,7 @@ export default class Search extends React.Component {
             <div className="search-books-results">
                 <ol className="books-grid">
                     {
-                        this.state.results.map(book => <Book update={this.update} book={book} />)
+                        this.state.results.map(book => <Book key={book.id} update={this.update} book={book} />)
                         }
 
 
