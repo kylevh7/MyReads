@@ -2,12 +2,7 @@ import React, { Component } from 'react'
 import Book from './books'
 export default class Shelf extends React.Component{
 
-    componentDidMount(){
-
-    }
-
 render() {
-    console.log(this.props)
     return (
         <div className="bookshelf">
           <h2 className="bookshelf-title">{this.props.title}</h2>

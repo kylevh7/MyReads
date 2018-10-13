@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 export default class Book extends React.Component{
 
-
 render() {
-
     return (
         <li>
           <div className="book">
